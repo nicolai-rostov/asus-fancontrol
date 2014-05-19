@@ -49,7 +49,19 @@ And add this line to the system's `crontab`:
 
     @reboot /usr/local/bin/asus-fancontrol
 
-Save, exit and reboot.
+Save, and quit.
+
+Create an executable script to restart `asus-fancontrol` upon resume from suspend.
+
+`/etc/pm/sleep.d/98asus-fancontrol`
+
+    #!/bin/bash
+    case "$1" in
+    hibernate|suspend) true;;
+    resume|thaw) echo path/to/asus-fancontrol | /usr/bin/at now;;
+    esac
+    
+Finally, you may either reboot, or suspend and resume, to get it going on the background.
 
 
 Authors
